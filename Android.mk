@@ -3,19 +3,16 @@ LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 LOCAL_MODULE    := libopenal 
 LOCAL_SRC_FILES := vendor/openal/libopenal.a
-
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE    := libopus 
 LOCAL_SRC_FILES := vendor/opus/libopus.a
-
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE    := libenet 
 LOCAL_SRC_FILES := vendor/enet/libenet.a
-
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
@@ -23,9 +20,12 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := samp
 LOCAL_LDLIBS := -llog -lOpenSLES
 
-LOCAL_C_INCLUDES += $(wildcard $(LOCAL_PATH)/vendor/)
+# Menambahkan pencarian include ke subfolder vendor agar file .h terbaca sempurna
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/vendor \
+                    $(LOCAL_PATH)/vendor/raknet \
+                    $(LOCAL_PATH)/vendor/raknet/SAMP
 
-# samp
+# samp source files
 FILE_LIST := $(wildcard $(LOCAL_PATH)/*.cpp)
 FILE_LIST += $(wildcard $(LOCAL_PATH)/game/*.cpp)
 FILE_LIST += $(wildcard $(LOCAL_PATH)/net/*.cpp)
@@ -37,10 +37,10 @@ FILE_LIST += $(wildcard $(LOCAL_PATH)/cryptors/*.cpp)
 FILE_LIST += $(wildcard $(LOCAL_PATH)/../santrope-tea-gtasa/encryption/*.cpp)
 FILE_LIST += $(wildcard $(LOCAL_PATH)/../santrope-tea-gtasa/encryption/*.c)
 
-# vendor
+# vendor source files (Sudah Diperbaiki Menjadi Huruf Kecil 'raknet')
 FILE_LIST += $(wildcard $(LOCAL_PATH)/vendor/ini/*.cpp)
-FILE_LIST += $(wildcard $(LOCAL_PATH)/vendor/RakNet/*.cpp)
-FILE_LIST += $(wildcard $(LOCAL_PATH)/vendor/RakNet/SAMP/*.cpp)
+FILE_LIST += $(wildcard $(LOCAL_PATH)/vendor/raknet/*.cpp)
+FILE_LIST += $(wildcard $(LOCAL_PATH)/vendor/raknet/SAMP/*.cpp)
 FILE_LIST += $(wildcard $(LOCAL_PATH)/vendor/imgui/*.cpp)
 FILE_LIST += $(wildcard $(LOCAL_PATH)/vendor/hash/md5.cpp)
 
