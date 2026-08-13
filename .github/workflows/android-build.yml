@@ -20,13 +20,16 @@ jobs:
       run: |
         sdkmanager --install "ndk;25.1.8937393"
 
-    # Perintah kompilasi menggunakan ndk-build untuk file Android.mk
-    - name: Build with NDK
+    # Perbaikan total dengan memaksa NDK membaca folder utama saat ini (.)
+    - name: Build with NDK (Fixed)
       run: |
-        $ANDROID_HOME/ndk/25.1.8937393/ndk-build
+        $ANDROID_HOME/ndk/25.1.8937393/ndk-build NDK_PROJECT_PATH=. APP_BUILD_SCRIPT=./Android.mk NDK_APPLICATION_MK=./Application.mk
 
+    # Mengambil hasil compile file .so di dalam folder libs maupun obj
     - name: Upload Compiled .so Artifact
       uses: actions/upload-artifact@v4
       with:
         name: samp-cef-libs
-        path: libs/
+        path: |
+          libs/
+          obj/local/
